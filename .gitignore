@@ -1,0 +1,16 @@
+.DS_Store
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+.env
+*.jsonl
+data/*.csv
+data/*.parquet
+!data/.gitkeep
+plots/*.png
+plots/*.jpg
+!plots/.gitkeep
+assets/*.png
+!assets/.gitkeep
+.venv/
+venv/
