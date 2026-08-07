@@ -1,6 +1,6 @@
-# GL Case Studies
+# AI Case Studies
 
-A series of machine learning case studies built for Great Learning, designed for citizen AI engineers: data scientists who work across domains without being domain experts in each one.
+A series of AI case studies, designed for citizen AI Engineers and Data Scientists who need to work across various domains and gain consultant-level expertise in each one.
 
 ## The core idea: law rediscovery
 
