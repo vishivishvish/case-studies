@@ -35,6 +35,8 @@ Stage 4 (explainable AI) shows that a model can rediscover a known law from data
 
 This is a probabilistic claim, not a proof, and it is tested as one. The agent is restricted to the pipeline's own shortlist (not asked to search the entire solution space cold), given a search tool to gather real-world evidence for each shortlisted candidate, and run N independent times. The result reported is a convergence rate ("selected the real-world answer in M/N trials"), not a single pass/fail run. For CS1 (Targeted Alpha Therapy), the agent was given the four isotopes flagged in Section 21 (Lu-177, Ac-225, Bi-213, At-211) plus a live evidence-search tool, and asked to independently select the one most established in current clinical practice, run 10 times.
 
+**Result (CS1, Section 22.9-22.12):** across 10 independent trials, the agent selected Lu-177, the real-world standard for peptide receptor radionuclide therapy, in 9. The one divergence chose At-211, on a trial where the search evidence for Lu-177 covered isotope abundance rather than clinical use, while At-211's search result used the phrase "medically useful" directly. A 90 percent convergence rate is specific to this model, prompt, and search tool, not a general guarantee.
+
 ## Case studies
 
 | # | Case study | Domain | Predicts | Law rediscovered | 8-stage status |
