@@ -21,7 +21,13 @@ Every case study builds toward the same eight-stage pipeline:
 5. GenAI-assisted feature engineering, where a free Hugging Face-hosted language model proposes candidate features, and an ablation confirms that human-engineered and AI-generated features together outperform either alone
 6. GenAI-guided synthetic data augmentation, checked for fidelity by comparing model performance on original-only, original-plus-synthetic, and synthetic-only data against the same held-out test set
 7. An agentic layer built with LangGraph, calling a free Hugging Face-hosted language model to turn model output into a natural-language recommendation
-8. An autonomous agent variant of that same layer, with self-directed planning, real tool use, and memory of past cases, built to show what separates a scripted agentic pipeline from genuine agent autonomy
+8. An autonomous agent variant of that same layer, with self-directed planning, real tool use, and memory of past cases, built to show what separates a scripted agentic pipeline from genuine agent autonomy. This same agent is also tasked with closing the loop: given the pipeline's own shortlist of top-scoring candidates, it independently cross-validates that shortlist against real-world search evidence and is tested for whether it converges on the configuration real-world domain experts have already settled on (see "Closing the loop" below).
+
+## Closing the loop: agentic validation against real-world practice
+
+Stage 4 (explainable AI) shows that a model can rediscover a known law from data alone. Stage 8's autonomous agent goes one step further: given the pipeline's own shortlist of top-scoring candidates plus a real-world search tool, can it independently arrive at the configuration domain experts have already converged on in practice?
+
+This is a probabilistic claim, not a proof, and it is tested as one. The agent is restricted to the pipeline's own shortlist (not asked to search the entire solution space cold), given a search tool to gather real-world evidence for each shortlisted candidate, and run N independent times. The result reported is a convergence rate ("selected the real-world answer in M/N trials"), not a single pass/fail run. For CS1 (Targeted Alpha Therapy), the agent was given the four isotopes flagged in Section 21 (Lu-177, Ac-225, Bi-213, At-211) plus a live evidence-search tool, and asked to independently select the one most established in current clinical practice, run 10 times.
 
 ## Case studies
 
