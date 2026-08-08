@@ -27,7 +27,7 @@ Every case study builds toward the same eight-stage pipeline:
 7. An agentic layer built with LangGraph, calling a free NVIDIA-hosted language model to turn model output into a natural-language recommendation
 8. An autonomous agent variant of that same layer, with self-directed planning, real tool use, and memory of past cases, built to show what separates a scripted agentic pipeline from genuine agent autonomy.
 
-Note: the free LLM backend for stages 5, 7, and 8 switched from Hugging Face to NVIDIA (NIM/Nemotron) after Hugging Face's free tier proved too rate-limited for repeated agentic experimentation.
+Note: the free LLM backend for stages 5, 7, and 8 switched from Hugging Face to NVIDIA NIM (NVIDIA Inference Microservices, serving Nemotron models) after Hugging Face's free tier proved too rate-limited for repeated agentic experimentation.
 
 ## Case studies
 
