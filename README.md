@@ -25,17 +25,9 @@ Every case study builds toward the same eight-stage pipeline:
 5. GenAI-assisted feature engineering, where a free NVIDIA-hosted language model proposes candidate features, and an ablation confirms that human-engineered and AI-generated features together outperform either alone
 6. GenAI-guided synthetic data augmentation, checked for fidelity by comparing model performance on original-only, original-plus-synthetic, and synthetic-only data against the same held-out test set
 7. An agentic layer built with LangGraph, calling a free NVIDIA-hosted language model to turn model output into a natural-language recommendation
-8. An autonomous agent variant of that same layer, with self-directed planning, real tool use, and memory of past cases, built to show what separates a scripted agentic pipeline from genuine agent autonomy. This same agent is also tested on a narrower task: given the pipeline's own shortlist of top-scoring candidates, can it select the configuration real-world practice has already settled on, using a search tool for corroboration (see "Validating shortlists against real-world evidence" below).
+8. An autonomous agent variant of that same layer, with self-directed planning, real tool use, and memory of past cases, built to show what separates a scripted agentic pipeline from genuine agent autonomy.
 
-Note: the free LLM backend for stages 5, 7, and 8 switched from Hugging Face to NVIDIA (NIM/Nemotron) after Hugging Face's free tier proved too rate-limited for repeated agentic-validation trials.
-
-## Validating shortlists against real-world evidence
-
-Stage 4 (explainable AI) shows a model can rediscover a known law from data alone. Stage 8 asks a narrower, more modest question: given a shortlist the pipeline already produced, can the same autonomous agent select the option real-world practice has already settled on, using a search tool for corroboration?
-
-This is a claim about agent reliability on a small, pre-narrowed shortlist, not a claim about scientific discovery. The agent never searches the full solution space; it chooses among a handful of candidates the pipeline has already ranked. The correct answers in these tests (Lu-177 for CS1, the C3/C4 sensorimotor configuration for CS2) are well-established facts likely already present in the underlying language model's training data, so a high convergence rate is evidence the agent reliably retrieves and applies known information when a search tool corroborates it, not evidence it found something new. Search evidence also did not always directly confirm the answer: in several CS1 trials the model noted the search result did not address clinical use and fell back on general background knowledge instead. Each case study runs 10 trials, enough to distinguish a working setup from a broken one, not enough to treat the resulting percentage as precise.
-
-**Result (CS1, Section 22.9-22.12):** across 10 independent trials, the agent selected Lu-177 in 9. The one divergence chose At-211, on a trial where the search evidence for Lu-177 covered isotope abundance rather than clinical use, while At-211's search result used the phrase "medically useful" directly.
+Note: the free LLM backend for stages 5, 7, and 8 switched from Hugging Face to NVIDIA (NIM/Nemotron) after Hugging Face's free tier proved too rate-limited for repeated agentic experimentation.
 
 ## Case studies
 
