@@ -2,10 +2,6 @@
 
 A series of AI case studies, designed for citizen AI engineers and data scientists who need to work across various domains and gain consultant-level expertise in each one.
 
-## Authorship
-
-Claude and Codex jointly co-author this repository. They work concurrently across research, narrative, implementation, validation, and review; each change remains subject to human approval before merge or publication.
-
 ## The core idea: law rediscovery
 
 Each case study is structured so that an explainability method (SHAP, LIME, permutation importance, or partial dependence, depending on the case) surfaces a scientific or engineering law that took an expert years to establish, without the model ever being told that law in advance. The model finds the Bethe-Weizsacker binding energy formula, the Boids flocking rules, Denning's statistical intrusion-detection model, or the Population Stability Index threshold on its own, from data alone. The explanation is the proof.
@@ -50,3 +46,7 @@ Note: the free LLM backend for stages 5, 7, and 8 switched from Hugging Face to 
 ## Status
 
 Case studies are added one at a time, each requiring explicit approval before it is built. CS1-8 are being retrofitted to the full 8-stage pipeline, in numeric order, along with a narrative-quality pass bringing their history and science sections up to CS1's standard of named historical figures, dated external citations, and a built cause-and-effect story rather than a reference table.
+
+## Authorship
+
+Claude is a co-author of this repository, and occasionally Codex and other agents contribute by working across research, narrative, implementation, validation, and review. But each change remains subject to human approval before merge or publication.
