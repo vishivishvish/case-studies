@@ -12,7 +12,7 @@ Case studies span a deliberately wide range of fields: nuclear medicine, neurosc
 
 ## The technical stack per case study
 
-Every case study builds toward the same eight-stage pipeline:
+Every case study is intended to build toward the same eight-stage pipeline, though not all have reached it yet (see the per-case-study status column below):
 
 1. A primary technique category: classical ML, unsupervised clustering, network analytics, or time series
 2. A light deep learning model trained on the same data
