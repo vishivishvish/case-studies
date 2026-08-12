@@ -8,7 +8,7 @@ Each case study is structured so that an explainability method (SHAP, LIME, perm
 
 ## Domain coverage
 
-Case studies span a deliberately wide range of fields: nuclear medicine, neuroscience and brain-machine interfaces, robotics, autonomous vehicles, drone swarms, cognitive psychology, quantum key distribution, quantitative finance, rocket engineering, network security, and data engineering, with more domains added over time until every field on the project's target list has a case study.
+Case studies span a deliberately wide range of fields: nuclear medicine, neuroscience and brain-machine interfaces, robotics, autonomous vehicles, drone swarms, cognitive psychology, quantum key distribution, quantitative finance, rocket engineering, network security, and data engineering, with more domains added over time until every domain on the project's target list has a case study.
 
 ## The technical stack per case study
 
