@@ -1,6 +1,6 @@
 # AI Case Studies
 
-A series of AI case studies, designed for citizen AI engineers and data scientists who need to work across various domains and gain consultant-level expertise in each one.
+A series of case studies, designed for citizen AI engineers and data scientists who need to work across various domains and gain consultant-level expertise in each one.
 
 ## The core idea: law rediscovery
 
