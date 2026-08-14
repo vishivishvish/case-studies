@@ -45,7 +45,7 @@ Note: the free LLM backend for stages 5, 7, and 8 switched from Hugging Face to 
 
 ## Status
 
-Case studies are added one at a time, each requiring explicit approval before it is built. CS3-8 are being retrofitted to the full 8-stage pipeline one at a time, in numeric order, along with a narrative-quality pass bringing their history and science sections up to CS1's standard of named historical figures, dated external citations, and a built cause-and-effect story rather than a reference table. CS9-11 already have all 8 stages structurally but are being migrated from their Hugging Face LLM backend to NVIDIA NIM for consistency with CS1-2.
+Case studies are added one at a time, each requiring explicit approval before it is built. Of the 11 case studies published so far, CS1, CS2, CS9, CS10, and CS11 are complete at all 8 stages; CS3-8 are being retrofitted to the full 8-stage pipeline one at a time, in numeric order, along with a narrative-quality pass bringing their history and science sections up to CS1's standard of named historical figures, dated external citations, and a built cause-and-effect story rather than a reference table. CS9-11 already have all 8 stages structurally but are being migrated from their Hugging Face LLM backend to NVIDIA NIM for consistency with CS1-2.
 
 ## Authorship
 
