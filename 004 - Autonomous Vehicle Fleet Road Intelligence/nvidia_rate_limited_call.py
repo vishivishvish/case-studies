@@ -17,12 +17,35 @@ LOCK_DIR = "/private/tmp/claude-502/-Users-vishnusubramanian-Documents/9fc25729-
 TS_FILE = "/private/tmp/claude-502/-Users-vishnusubramanian-Documents/9fc25729-7ea2-4436-8e8c-1556856978e4/scratchpad/nvidia_coord/last_call.txt"
 MIN_INTERVAL = 1.8  # seconds between ANY two calls across ALL agents => ~33 req/min, safely under the 40 RPM cap
 
+STALE_LOCK_SECONDS = 30  # a lock held this long was almost certainly abandoned by a crashed process
+
 def _acquire_slot():
+    wait_started = time.time()
     while True:
         try:
             os.mkdir(LOCK_DIR)
             break
         except FileExistsError:
+            # Stale-lock recovery: a crashed holder (e.g. a segfaulted kernel) can leave LOCK_DIR
+            # behind forever, since its `finally: os.rmdir(LOCK_DIR)` never gets to run. Without this,
+            # every future call across every process sharing this lock would spin here indefinitely.
+            try:
+                lock_age = time.time() - os.stat(LOCK_DIR).st_mtime
+            except FileNotFoundError:
+                lock_age = 0  # lock disappeared between the failed mkdir and this stat; just retry
+            if lock_age > STALE_LOCK_SECONDS:
+                try:
+                    os.rmdir(LOCK_DIR)
+                except OSError:
+                    pass  # lost the race to another process also clearing it; fine, loop and retry
+                continue
+            if time.time() - wait_started > 120:
+                raise TimeoutError(
+                    "Timed out after 120s waiting for the shared NVIDIA rate-limit lock "
+                    f"({LOCK_DIR}). Heavy contention from other concurrent callers, or a lock "
+                    "that is stale but younger than the staleness threshold. Failing loudly "
+                    "instead of hanging indefinitely."
+                )
             time.sleep(0.05 + random.uniform(0, 0.05))
     try:
         last = 0.0
