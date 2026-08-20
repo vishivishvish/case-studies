@@ -12,9 +12,14 @@ import os
 import time
 import json
 import random
+import tempfile
 
-LOCK_DIR = "/private/tmp/claude-502/-Users-vishnusubramanian-Documents/9fc25729-7ea2-4436-8e8c-1556856978e4/scratchpad/nvidia_coord/lock"
-TS_FILE = "/private/tmp/claude-502/-Users-vishnusubramanian-Documents/9fc25729-7ea2-4436-8e8c-1556856978e4/scratchpad/nvidia_coord/last_call.txt"
+# A fixed, session-independent temp path (NOT a Claude-session scratchpad, which gets wiped
+# once that session ends) so this lock survives across separate notebook runs and processes.
+_COORD_DIR = os.path.join(tempfile.gettempdir(), "case_studies_nvidia_coord")
+os.makedirs(_COORD_DIR, exist_ok=True)
+LOCK_DIR = os.path.join(_COORD_DIR, "lock")
+TS_FILE = os.path.join(_COORD_DIR, "last_call.txt")
 MIN_INTERVAL = 1.8  # seconds between ANY two calls across ALL agents => ~33 req/min, safely under the 40 RPM cap
 
 STALE_LOCK_SECONDS = 30  # a lock held this long was almost certainly abandoned by a crashed process
