@@ -81,4 +81,4 @@ The corpus downloads inside the notebook. A local copy of Google Speech Commands
 
 ## Authorship
 
-Although ideated by me (vishivishvish), the co-authors of this repository include Claude, Codex, Cursor, Gemini and other agents who contribute by working across research, narrative, implementation, validation, and review. But each change remains subject to human approval before merge or publication.
+Although ideated by me (vishivishvish), the co-authors of this repository include Claude, Codex, Cursor, Gemini, Qwen and other agents who contribute by working across research, narrative, implementation, validation, and review. But each change remains subject to human approval before merge or publication.
