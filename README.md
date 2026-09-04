@@ -52,7 +52,7 @@ CS12 adds speech and audio to the project's field list, an approved extension of
 
 Two design substitutions apply. Stage 3 uses wav2vec 2.0 in place of TabPFN, which expects tabular structure and does not fit an audio domain, and stage 4 uses permutation importance in place of SHAP or LIME, because it folds back onto the 40 by 32 spectrogram grid in a way neither of those does. Stages 5, 6, 7, and 8 call NVIDIA NIM through the same shared rate limiter CS3 through CS6 use, each with a documented fallback so the notebook runs without credentials.
 
-The case study is built around a controlled comparison. Every model runs under two MFCC feature representations, a mean-pooled 40-feature vector and the full flattened 1,280-feature spectrogram, which differ in exactly one thing, the time axis, so the accuracy gap between them is attributable to nothing else. The split is speaker-disjoint, since MFCCs encode the vocal tract as much as the word and a random split would let the highest-capacity model score well by recognising voices. No performance metric appears anywhere in the notebook yet, because the notebook has not been executed.
+The case study is built around a controlled comparison. Every model runs under two MFCC feature representations, a mean-pooled 40-feature vector and the full flattened 1,280-feature spectrogram, which differ in exactly one thing, the time axis, so the accuracy gap between them is attributable to nothing else. The split is speaker-disjoint, since MFCCs encode the vocal tract as much as the word and a random split would let the highest-capacity model score well by recognising voices. No performance metric appears anywhere in the notebook yet, as it has not been executed.
 
 ### CS12 handoff: what remains and how to finish it
 
