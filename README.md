@@ -56,4 +56,4 @@ The case study is built around a controlled comparison. Every model runs under t
 
 ## Authorship
 
-Although ideated by me (vishivishvish), the co-authors of this repository include Claude, OpenAI Codex, Gemini and other agents who contribute by working across research, narrative, implementation, validation, and review. But each change remains subject to human approval before merge or publication.
+Although ideated by me (vishivishvish), the co-authors of this repository include Claude, Codex, Cursor, Gemini and other agents who contribute by working across research, narrative, implementation, validation, and review. But each change remains subject to human approval before merge or publication.
