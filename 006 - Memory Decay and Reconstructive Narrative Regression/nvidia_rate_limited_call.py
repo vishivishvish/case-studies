@@ -67,8 +67,17 @@ def _acquire_slot():
     finally:
         os.rmdir(LOCK_DIR)
 
+# A stalled TLS read can outlive requests' own read timeout: if the peer accepts the connection and
+# then goes silent mid-body, CPython blocks in _ssl__SSLSocket_read -> poll and the socket-level
+# deadline is never reached. Observed in practice as a notebook run wedged for 25+ minutes on a
+# single call. HARD_CALL_TIMEOUT is a wall-clock ceiling enforced from outside the request thread,
+# so a wedged socket costs one retry instead of the whole run.
+HARD_CALL_TIMEOUT = 200  # seconds; must exceed the (connect, read) tuple below
+
+
 def nvidia_chat(prompt, api_key=None, max_tokens=900, temperature=0.2, model="nvidia/nemotron-3-ultra-550b-a55b", max_retries=5):
     import requests
+    from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
     if api_key is None:
         env_path = os.path.expanduser("~/.config/secrets/.env")
         with open(env_path) as f:
@@ -79,8 +88,8 @@ def nvidia_chat(prompt, api_key=None, max_tokens=900, temperature=0.2, model="nv
     last_exc = None
     for attempt in range(max_retries):
         _acquire_slot()
-        try:
-            resp = requests.post(
+        def _do_post():
+            return requests.post(
                 "https://integrate.api.nvidia.com/v1/chat/completions",
                 headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
                 json={
@@ -94,6 +103,22 @@ def nvidia_chat(prompt, api_key=None, max_tokens=900, temperature=0.2, model="nv
                 },
                 timeout=(30, 150)
             )
+
+        # NOT a `with` block: ThreadPoolExecutor.__exit__ calls shutdown(wait=True), which would
+        # block on the very thread this ceiling exists to walk away from. A wedged SSL read cannot
+        # be interrupted from outside, so the only options are to abandon the thread or to hang on
+        # it; shutdown(wait=False) abandons it.
+        pool = ThreadPoolExecutor(max_workers=1)
+        try:
+            resp = pool.submit(_do_post).result(timeout=HARD_CALL_TIMEOUT)
+        except FutureTimeout:
+            pool.shutdown(wait=False)
+            last_exc = RuntimeError(
+                f"NVIDIA call exceeded the {HARD_CALL_TIMEOUT}s hard wall-clock ceiling "
+                "(stalled TLS read); retrying."
+            )
+            time.sleep(2 ** attempt + random.uniform(0, 1))
+            continue
         except requests.exceptions.RequestException as exc:
             # Covers read/connect timeouts, dropped connections, DNS hiccups, etc. A single slow
             # or stalled response should not kill the whole notebook run: back off and retry
@@ -101,6 +126,8 @@ def nvidia_chat(prompt, api_key=None, max_tokens=900, temperature=0.2, model="nv
             last_exc = exc
             time.sleep(2 ** attempt + random.uniform(0, 1))
             continue
+        finally:
+            pool.shutdown(wait=False)
         if resp.status_code == 429:
             time.sleep(2 ** attempt + random.uniform(0, 1))
             continue
