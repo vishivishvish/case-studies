@@ -1,6 +1,6 @@
 # AI Case Studies
 
-A series of AI/ML case studies, designed for citizen AI engineers and data scientists who need to work across various domains and gain consultant-level expertise in each one.
+A series of AI/ML case studies, designed for citizen AI engineers and data scientists who need to work across various domains and to gain consultant-level expertise in each one.
 
 ## The core idea: law rediscovery
 
@@ -21,7 +21,7 @@ Every case study is intended to build toward the same eight-stage pipeline, thou
 5. GenAI-assisted feature engineering, where a free NVIDIA-hosted language model proposes candidate features, and an ablation confirms that human-engineered and AI-generated features together outperform either alone
 6. GenAI-guided synthetic data augmentation, checked for fidelity by comparing model performance on original-only, original-plus-synthetic, and synthetic-only data against the same held-out test set
 7. An agentic layer built with LangGraph, calling a free NVIDIA-hosted language model to turn model output into a natural-language recommendation
-8. An autonomous agent variant of that same layer, with self-directed planning, real tool use, and memory of past cases, built to show what separates a scripted agentic pipeline from genuine agent autonomy.
+8. An autonomous agent variant of that same layer, with self-directed planning, real tool use, and memory of past cases, built to show what separates a scripted agentic pipeline from genuine agent autonomy
 
 Note: the free LLM backend for stages 5, 7, and 8 switched from Hugging Face to NVIDIA NIM (NVIDIA Inference Microservices, serving nvidia/nemotron-3-ultra-550b-a55b, the model confirmed to work reliably across this account's API key) after Hugging Face's free tier proved too rate-limited for repeated agentic experimentation.
 
