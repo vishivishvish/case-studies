@@ -23,14 +23,14 @@ Every case study is intended to build toward the same eight-stage pipeline, thou
 7. An agentic layer built with LangGraph, calling a free NVIDIA-hosted language model to turn model output into a natural-language recommendation
 8. An autonomous agent variant of that same layer, with self-directed planning, real tool use, and memory of past cases, built to show what separates a scripted agentic pipeline from genuine agent autonomy
 
-Note: the free LLM backend for stages 5, 7, and 8 switched from Hugging Face to NVIDIA NIM (NVIDIA Inference Microservices, serving nvidia/nemotron-3-ultra-550b-a55b, the model confirmed to work reliably across this account's API key) after Hugging Face's free tier proved too rate-limited for repeated agentic experimentation.
+Note: the free LLM backend for stages 5, 7, and 8 switched from Hugging Face to NVIDIA NIM (NVIDIA Inference Microservices, serving nvidia/nemotron-3-ultra-550b-a55b, the model confirmed to work reliably with this account's API key) after Hugging Face's free tier proved too rate-limited for repeated agentic experimentation.
 
 ## Case studies
 
 | # | Case study | Domain | Predicts | Law rediscovered | 8-stage status |
 |---|---|---|---|---|---|
 | 1 | [Targeted Alpha Therapy](001%20-%20Targeted%20Alpha%20Therapy/targeted_alpha_therapy.ipynb) | Nuclear medicine | Nuclear binding energy per nucleon from proton/neutron counts (AME2020, ~3,554 nuclides) | The Semi-Empirical Mass Formula (Bethe-Weizsacker, 1935), found independently via SHAP | Full 8 stages |
-| 2 | [EEG Motor Imagery](002%20-%20EEG%20Motor%20Imagery/eeg_motor_imagery.ipynb) | Neuroscience / brain-machine interfaces | Left vs. right hand motor imagery from 64-channel EEG (PhysioNet, 109 subjects) | Pfurtscheller's event-related desynchronization and Penfield's motor homunculus (C3/C4 lateralization) | Full 8 stages |
+| 2 | [EEG Motor Imagery](002%20-%20EEG%20Motor%20Imagery/eeg_motor_imagery.ipynb) | Neuroscience / brain-machine interfaces | Left vs. right hand motor imagery from 64-channel EEG (PhysioNet, 109 subjects) | Pfurtscheller's event-related desynchronization and Penfield's motor homunculus (C3/C4 lateralization) | Executing... |
 | 3 | [Humanoid Robot Grasp Prediction](003%20-%20Humanoid%20Robot%20Grasp%20Prediction/grasp_prediction.ipynb) | Robotics | Grasp rectangle for household objects from RGB images (synthetic Cornell Grasping replica) | Napier's Power/Precision Grip dichotomy (1956) and Gibson's affordances (1979) | Full 8 stages |
 | 4 | [Autonomous Vehicle Fleet Road Intelligence](004%20-%20Autonomous%20Vehicle%20Fleet%20Road%20Intelligence/av_fleet_network_intelligence.ipynb) | Autonomous vehicles / network science | Taxi knowledge-sharing network structure from synthetic GPS traces (500 taxis, 7 days) | Milgram's small-world phenomenon (the Barabasi-Albert scale-free law was tested but not confirmed on this data; Granovetter's Strength of Weak Ties was tested and dropped after failing to hold even under a purpose-built diffusion mechanism) | Full 8 stages |
 | 5 | [Autonomous Drone Swarm Behavioral Clustering](005%20-%20Autonomous%20Drone%20Swarm%20Behavioral%20Clustering/drone_swarm_clustering.ipynb) | Drones / multi-agent systems | Behavioral regime of a simulated drone swarm from kinematic features alone | Reynolds' Boids rules, Separation/Alignment/Cohesion (SIGGRAPH 1987), found via K-Means after DBSCAN was tested and found not to separate this data into 3 clusters | Full 8 stages |
@@ -46,7 +46,7 @@ Note: the free LLM backend for stages 5, 7, and 8 switched from Hugging Face to 
 
 ## Status
 
-Case studies are added one at a time, each requiring explicit approval before it is built. Of the 12 case studies registered so far, CS1, CS2, CS3, CS4, CS5, CS6, CS7, CS8, CS9, CS10, CS11, and CS12 are complete at all 8 stages.
+Case studies are added one at a time, each requiring explicit approval before they are built. Of the 12 case studies registered so far, CS1, CS2, CS3, CS4, CS5, CS6, CS7, CS8, CS9, CS10, CS11, and CS12 are complete at all 8 stages.
 
 CS6's retrofit finished first: stages 1, 3, and 4 already existed and were repaired (a DeadKernelError, and a scientifically bogus synthetic-data fallback replaced with a real, mechanism-driven text-decay generator, Hippocorpus being gated with no programmatic access), then stages 2, 5, 6, 7, and 8 were built and executed end to end at 59 code cells with zero errors.
 
