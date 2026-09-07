@@ -4,7 +4,7 @@ A series of AI case studies, designed for citizen AI engineers and data scientis
 
 ## The core idea: law rediscovery
 
-Each case study is structured so that an explainability method (SHAP, LIME, permutation importance, or partial dependence, depending on the case) surfaces a scientific or engineering law that took an expert years to establish, without the model ever being told that law in advance. The model finds the Bethe-Weizsacker binding energy formula, the Boids flocking rules, Denning's statistical intrusion-detection model, or the Population Stability Index threshold on its own, from data alone. The explanation is the proof.
+Each case study is structured so that an explainability method (SHAP, LIME, permutation importance, or partial dependence, depending on the case) surfaces a scientific or engineering law that took experts years to establish, without the model ever being told that law in advance. The model finds the Bethe-Weizsacker binding energy formula, the Boids flocking rules, Denning's statistical intrusion-detection model, or the Population Stability Index threshold on its own, from data alone. The explanation is the proof.
 
 ## Domain coverage
 
@@ -46,7 +46,7 @@ Note: the free LLM backend for stages 5, 7, and 8 switched from Hugging Face to 
 
 ## Status
 
-Case studies are added one at a time, each requiring explicit approval before they are built. Of the 12 case studies registered so far, CS1, CS2, CS3, CS4, CS5, CS6, CS7, CS8, CS9, CS10, CS11, and CS12 are complete at all 8 stages.
+Case studies are added one at a time, each requiring explicit approval before it is built. Of the 12 case studies registered so far, CS1, CS2, CS3, CS4, CS5, CS6, CS7, CS8, CS9, CS10, CS11, and CS12 are complete at all 8 stages.
 
 CS6's retrofit finished first: stages 1, 3, and 4 already existed and were repaired (a DeadKernelError, and a scientifically bogus synthetic-data fallback replaced with a real, mechanism-driven text-decay generator, Hippocorpus being gated with no programmatic access), then stages 2, 5, 6, 7, and 8 were built and executed end to end at 59 code cells with zero errors.
 
