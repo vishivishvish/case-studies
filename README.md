@@ -62,4 +62,4 @@ The shared NVIDIA rate limiter (`nvidia_rate_limited_call.py`, copied identicall
 
 ## Authorship
 
-Although ideated by me (vishivishvish), the co-authors of this repository include Claude, Codex, Cursor, Gemini, Qwen and other agents who contribute by working across research, narrative, implementation, validation, and review. But each change remains subject to human approval before merge or publication.
+Although ideated by me (vishivishvish), the co-authors of this repository include Claude, Codex, Cursor, Gemini, Grok, Qwen and other agents who contribute by working across research, narrative, implementation, validation, and review. But each change remains subject to human approval before merge or publication.
