@@ -1,0 +1,41 @@
+# CPU-safe pins for case-studies notebooks (CS7, CS8, CS12)
+# No GPU dependencies, no heavy pip, no nbconvert/training
+
+# Core data science
+numpy
+pandas
+scipy
+scikit-learn
+matplotlib
+seaborn
+
+# Specialized ML
+xgboost
+shap
+statsmodels
+
+# Image/visualization
+pillow
+
+# Jupyter ecosystem
+jupyter
+nbconvert
+ipykernel
+
+# Deep learning (CPU only)
+torch --index-url https://download.pytorch.org/whl/cpu
+
+# Audio processing (CS12)
+librosa
+
+# Transformers (CS12)
+transformers
+
+# Optional: Chronos (CS7/CS8) - may need from source, comment out if fails
+# chronos
+
+# Optional: TabPFN (CS7) - comment out if fails
+# tabpfn
+
+# Optional: langgraph (CS12)
+langgraph

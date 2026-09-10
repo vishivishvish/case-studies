@@ -14,3 +14,20 @@ assets/*.png
 !assets/.gitkeep
 .venv/
 venv/
+
+# Large data files and MNE cache
+**/MNE-eegbci-data/
+**/data/processed/*.npy
+**/data/processed/*.fif
+**/data/processed/*.pt
+**/data/processed/*.pkl
+**/data/processed/*.json
+_nospace/cs002_work/data/
+_nospace/cs002_work/plots/
+
+# Nova progress/log directories
+nova-*-progress/
+nova-*-steps/
+nova-*-logs/
+nova-readme-cursor.log
+nova-sync-github.log
