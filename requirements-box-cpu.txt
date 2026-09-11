@@ -38,4 +38,4 @@ transformers
 # tabpfn
 
 # Optional: langgraph (CS12)
-langgraph
+langgraphgymnasium[box2d]>=1.0
