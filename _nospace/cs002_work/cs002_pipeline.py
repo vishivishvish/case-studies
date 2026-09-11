@@ -700,6 +700,9 @@ from sklearn.model_selection import cross_val_score, StratifiedKFold
 
 X = np.load("data/processed/X.npy")
 y = np.load("data/processed/y.npy")
+X = np.log10(np.clip(X, 1e-30, None))
+from sklearn.preprocessing import StandardScaler
+X = StandardScaler().fit_transform(X)
 with open("data/processed/feature_names.json") as f:
     feature_names = json.load(f)
 
@@ -775,24 +778,27 @@ def step_18_executed_notebook() -> Dict[str, Any]:
     """Execute full notebook via nbconvert to produce executed version with outputs."""
     import subprocess
 
-    out_nb = WORK_DIR / "eeg_motor_imagery_executed.ipynb"
+    # Basename + output-dir; include --allow-errors up front (never insert mid-flag).
+    out_name = "eeg_motor_imagery_executed"
     cmd = [
         VENV_PYTHON, "-m", "nbconvert",
         "--to", "notebook",
         "--execute",
-        "--ExecutePreprocessor.timeout=600",
+        "--allow-errors",
+        "--ExecutePreprocessor.timeout=2400",
         "--ExecutePreprocessor.kernel_name=python3",
-        "--output", str(out_nb),
-        str(NOTEBOOK)
+        f"--output={out_name}",
+        f"--output-dir={WORK_DIR}",
+        str(NOTEBOOK),
     ]
-    r = subprocess.run(cmd, capture_output=True, text=True, timeout=600, cwd=WORK_DIR)
-    if r.returncode != 0:
-        # Try with allow_errors
-        cmd.insert(-2, "--allow-errors")
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=600, cwd=WORK_DIR)
-    if r.returncode != 0:
-        raise RuntimeError(f"nbconvert failed: {r.stderr}")
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=2400, cwd=str(WORK_DIR))
+    out_nb = WORK_DIR / f"{out_name}.ipynb"
+    if r.returncode != 0 or not out_nb.exists():
+        raise RuntimeError(
+            f"nbconvert failed (code={r.returncode}): {(r.stderr or r.stdout or '')[-2000:]}"
+        )
     return {"detail": f"Executed notebook saved to {out_nb.name}"}
+
 
 
 def step_19_fill_conclusion() -> Dict[str, Any]:
@@ -858,168 +864,157 @@ def step_20_sync_to_real() -> Dict[str, Any]:
     """Copy executed notebook, plots, and data back to real 002 directory."""
     import subprocess
 
-    code = '''
+    code = """
 import shutil, os
 real = "/home/box/case-studies/002 - EEG Motor Imagery"
 work = "/home/box/case-studies/_nospace/cs002_work"
 
-# Copy executed notebook
-shutil.copy2(os.path.join(work, "eeg_motor_imagery_executed.ipynb"),
-             os.path.join(real, "eeg_motor_imagery_executed.ipynb"))
+def safe_copy(src, dst):
+    if not os.path.exists(src):
+        return "missing"
+    if os.path.exists(dst) and os.path.samefile(src, dst):
+        return "same"
+    os.makedirs(os.path.dirname(dst) or ".", exist_ok=True)
+    shutil.copy2(src, dst)
+    return "copied"
 
-# Copy plots
+notes = []
+notes.append("nb=" + safe_copy(os.path.join(work, "eeg_motor_imagery_executed.ipynb"),
+                               os.path.join(real, "eeg_motor_imagery_executed.ipynb")))
+
 plots_work = os.path.join(work, "plots")
 plots_real = os.path.join(real, "plots")
-if os.path.exists(plots_work):
+os.makedirs(plots_real, exist_ok=True)
+pc = sc = 0
+if os.path.isdir(plots_work):
     for f in os.listdir(plots_work):
         if f.endswith(".png"):
-            shutil.copy2(os.path.join(plots_work, f), os.path.join(plots_real, f))
+            r = safe_copy(os.path.join(plots_work, f), os.path.join(plots_real, f))
+            pc += r == "copied"
+            sc += r == "same"
+notes.append(f"plots copied={pc} same={sc}")
 
-# Copy processed data
+# data/ in work is often a symlink into real — skip same-file; only copy if distinct
 data_work = os.path.join(work, "data", "processed")
 data_real = os.path.join(real, "data", "processed")
-if os.path.exists(data_work):
+dc = ds = 0
+if os.path.isdir(data_work):
     os.makedirs(data_real, exist_ok=True)
     for f in os.listdir(data_work):
-        shutil.copy2(os.path.join(data_work, f), os.path.join(data_real, f))
-
-print("Synced to real 002 directory")
-'''
-    r = subprocess.run([VENV_PYTHON, "-c", code], capture_output=True, text=True, timeout=60, cwd=WORK_DIR)
+        r = safe_copy(os.path.join(data_work, f), os.path.join(data_real, f))
+        dc += r == "copied"
+        ds += r == "same"
+notes.append(f"data copied={dc} same={ds}")
+print("Synced to real 002 directory: " + "; ".join(notes))
+"""
+    r = subprocess.run([VENV_PYTHON, "-c", code], capture_output=True, text=True, timeout=60, cwd=str(WORK_DIR))
     if r.returncode != 0:
         raise RuntimeError(r.stderr)
     return {"detail": r.stdout.strip()}
+
 
 
 def step_21_readme_update() -> Dict[str, Any]:
     """Create/update README.md in real 002 directory with status."""
     import subprocess
-
-    code = '''
-import json, os, datetime
-real = "/home/box/case-studies/002 - EEG Motor Imagery"
-work = "/home/box/case-studies/_nospace/cs002_work"
-
-with open(os.path.join(work, "data/processed/config_scores.json")) as f:
-    configs = json.load(f)
-with open(os.path.join(work, "data/processed/stage_a_result.json")) as f:
-    stage_a = json.load(f)
-with open(os.path.join(work, "data/processed/stage_b_result.json")) as f:
-    stage_b = json.load(f)
-with open(os.path.join(work, "data/processed/tabpfn_result.json")) as f:
-    tabpfn = json.load(f)
-
-best_config = max(configs.items(), key=lambda x: x[1]["mean"]) if configs else ("N/A", {"mean": 0})
-
-readme = f"""# CS002: EEG Motor Imagery Classification
-
-## Status: ✅ Pipeline Complete (Auto-Generated)
-*Last updated: {datetime.datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S %Z")}*
-
-## Dataset
-- **Source:** PhysioNet EEG Motor Movement/Imagery Dataset
-- **Subject:** 1 (single-subject pilot)
-- **Runs:** 4, 8, 12 (motor imagery: left/right hand)
-- **Channels:** 64 EEG, 160 Hz, 2-second trials
-- **Trials:** ~90 per class
-
-## Pipeline Steps
-1. Environment & dependency check
-2. Data availability verification
-3. Notebook code extraction
-4. Bandpass filtering (1-100 Hz) + epoching
-5. PSD feature extraction (5 bands × 64 ch = 320 features)
-6. Human-engineered features (C3/C4 asymmetry, totals, broadband var)
-7. Random Forest (5-fold CV)
-8. XGBoost (5-fold CV)
-9. SHAP analysis (beeswarm, band importance, topomaps)
-10. Topographic brain maps (class-specific)
-11. Light Deep Learning (EEGNetLite on PSD)
-12. TabPFN foundation model benchmark
-13. Stage A: Signal quality prediction
-14. Stage B: Control-state classification
-15. Configuration scoring
-16. Agentic layer scaffold
-17. Full notebook execution
-18. Results injection + sync
-
-## Key Results
-
-### Best Configuration
-**{best_config[0]}** — CV Accuracy: **{best_config[1]["mean"]:.3f} ± {best_config[1]["std"]:.3f}**
-
-### Model Comparison
-| Model | Accuracy |
-|-------|----------|
-| Random Forest (C3/C4 alpha/beta) | {configs.get("Subject-specific C3/C4 sensorimotor mu-beta", {{"mean": 0}})["mean"]:.3f} |
-| XGBoost | (see notebook) |
-| EEGNetLite | (see notebook) |
-| TabPFN | {tabpfn.get("accuracy", "N/A") if tabpfn.get("status") == "success" else "skipped"} |
-
-### Neuroscience Rediscovery (SHAP)
-- ✅ **ERD (Event-Related Desynchronization):** Alpha/beta suppression in sensorimotor cortex
-- ✅ **C3/C4 Lateralisation:** Contralateral pattern (left hand → right hemisphere/C4, right hand → left hemisphere/C3)
-- ✅ **Mu/Beta Bands:** Strongest SHAP importance in alpha (8-13 Hz) and beta (13-30 Hz)
-
-### Stage A: Signal Quality
-- Broadband variability threshold (90th %ile): {stage_a["threshold"]:.4f}
-- Trials flagged for review: {stage_a["flagged_count"]} / {stage_a["total"]}
-
-### Stage B: Control-State Classification
-- Enriched model accuracy: {stage_b["accuracy"]:.3f}
-
-## Artifacts
-- `eeg_motor_imagery_executed.ipynb` — Fully executed notebook with outputs
-- `plots/` — SHAP beeswarm, band importance, topomaps
-- `data/processed/` — Features, models, SHAP values, config scores
-
-## Reproduce
-```bash
-cd /home/box/case-studies/_nospace/cs002_work
-python cs002_pipeline.py --step 1  # env check
-python cs002_pipeline.py --step 4  # load & filter
-# ... run steps sequentially
-python cs002_pipeline.py --step 18  # execute notebook
-python cs002_pipeline.py --step 20  # sync to real dir
-```
-"""
-with open(os.path.join(real, "README.md"), "w") as f:
-    f.write(readme)
-print("README.md created in real 002 directory")
-'''
-    r = subprocess.run([VENV_PYTHON, "-c", code], capture_output=True, text=True, timeout=60, cwd=WORK_DIR)
+    script = WORK_DIR / "step21_readme.py"
+    r = subprocess.run(
+        [VENV_PYTHON, str(script)],
+        capture_output=True,
+        text=True,
+        timeout=60,
+        cwd=str(WORK_DIR),
+    )
     if r.returncode != 0:
-        raise RuntimeError(r.stderr)
-    return {"detail": r.stdout.strip()}
+        raise RuntimeError(r.stderr or r.stdout)
+    return {"detail": (r.stdout or "").strip()}
 
 
 def step_22_git_commit() -> Dict[str, Any]:
-    """Git add, commit, and push to feature branch; open PR (if gh available)."""
+    """Commit CS002 artifacts with commit-cursor and open a PR (selective paths)."""
     import subprocess
+    from datetime import datetime
 
-    real = "/home/box/case-studies/002 - EEG Motor Imagery"
-    work = "/home/box/case-studies/_nospace/cs002_work"
-
-    # Check git status
-    r = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True, cwd=real)
-    if not r.stdout.strip():
-        return {"detail": "No changes to commit"}
-
+    repo = Path("/home/box/case-studies")
+    paths = [
+        "002 - EEG Motor Imagery/README.md",
+        "002 - EEG Motor Imagery/eeg_motor_imagery.ipynb",
+        "002 - EEG Motor Imagery/eeg_motor_imagery_executed.ipynb",
+        "002 - EEG Motor Imagery/plots",
+        "_nospace/cs002_work/cs002_pipeline.py",
+        "_nospace/cs002_work/step21_readme.py",
+        "_nospace/cs002_work/STEPS.md",
+        "_nospace/cs002_work/step_status.json",
+        "_nospace/cs002_work/steps.log",
+    ]
+    # ensure on a feature branch from main
+    subprocess.run(["git", "checkout", "main"], cwd=repo, capture_output=True, text=True)
+    subprocess.run(["git", "pull", "--ff-only"], cwd=repo, capture_output=True, text=True)
     branch = f"cs002-pipeline-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
-    subprocess.run(["git", "checkout", "-b", branch], cwd=real, capture_output=True)
-    subprocess.run(["git", "add", "."], cwd=real, capture_output=True)
-    subprocess.run(["git", "commit", "-m", "CS002: Complete pipeline with executed notebook, plots, results"], cwd=real, capture_output=True)
-    subprocess.run(["git", "push", "-u", "origin", branch], cwd=real, capture_output=True)
+    r = subprocess.run(["git", "checkout", "-b", branch], cwd=repo, capture_output=True, text=True)
+    if r.returncode != 0:
+        raise RuntimeError(r.stderr or r.stdout)
 
-    # Try to create PR
-    pr_url = ""
-    r = subprocess.run(["gh", "pr", "create", "--title", "CS002: Complete EEG Motor Imagery Pipeline",
-                        "--body", "Automated pipeline execution with all steps, plots, and results."],
-                       capture_output=True, text=True, cwd=real)
-    if r.returncode == 0:
-        pr_url = r.stdout.strip()
+    existing = [p for p in paths if (repo / p).exists()]
+    if not existing:
+        return {"detail": "No CS002 paths found to commit"}
+    r = subprocess.run(["git", "add", "--"] + existing, cwd=repo, capture_output=True, text=True)
+    if r.returncode != 0:
+        raise RuntimeError(r.stderr or r.stdout)
+    st = subprocess.run(["git", "status", "--porcelain"], cwd=repo, capture_output=True, text=True)
+    staged = [ln for ln in st.stdout.splitlines() if ln and ln[0] in "AMDRC"]
+    # also include lines that start with letter in first column (staged)
+    staged = [ln for ln in st.stdout.splitlines() if ln[:2].strip() and not ln.startswith("??") and not ln.startswith(" ")]
+    # simpler: diff --cached
+    cached = subprocess.run(["git", "diff", "--cached", "--name-only"], cwd=repo, capture_output=True, text=True)
+    if not cached.stdout.strip():
+        return {"detail": "Nothing staged for CS002"}
 
-    return {"detail": f"Committed to branch {branch}. PR: {pr_url or 'gh not available'}"}
+    msg = """CS002: pipeline complete with executed notebook, plots, README
+
+Gated 22-step EEG motor-imagery run: executed notebook, SHAP/topomap plots,
+results README, and pipeline scripts. Uses git commit-cursor authorship.
+"""
+    r = subprocess.run(
+        ["git", "commit-cursor", "-m", msg],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    if r.returncode != 0:
+        raise RuntimeError(r.stderr or r.stdout)
+
+    r = subprocess.run(["git", "push", "-u", "origin", branch], cwd=repo, capture_output=True, text=True)
+    if r.returncode != 0:
+        raise RuntimeError(r.stderr or r.stdout)
+
+    body = """## Summary
+- CS002 EEG Motor Imagery gated pipeline through README + artifacts
+- Executed notebook, plots, README with results snapshot
+- Pipeline scripts under `_nospace/cs002_work/` (data artifacts stay gitignored)
+
+## Notes
+- TabPFN skipped (needs Prior Labs token)
+- EEGNetLite exploratory test acc ~0.778; RF 5-fold CV ~0.689 after log10+scale
+- Single-subject exploratory study
+
+## Test plan
+- [ ] Skim README numbers vs notebook
+- [ ] Confirm no large `.fif`/`.npy`/`.pkl` in the PR
+"""
+    r = subprocess.run(
+        [
+            "gh", "pr", "create",
+            "--title", "CS002: Complete EEG Motor Imagery pipeline",
+            "--body", body,
+        ],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    pr = (r.stdout or "").strip() if r.returncode == 0 else f"PR failed: {r.stderr or r.stdout}"
+    return {"detail": f"branch={branch}; files={len(cached.stdout.splitlines())}; {pr}"}
+
 
 
 # ─── Step registry ───────────────────────────────────────────────

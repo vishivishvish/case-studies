@@ -1,0 +1,429 @@
+2026-09-07 13:58:18,368 [INFO] Step 1 [running]: env_check — started
+2026-09-07 13:58:29,766 [INFO] Step 1 [done]: env_check — Python: Python 3.13.5. Missing: none
+2026-09-07 13:59:44,950 [INFO] Step 2 [running]: data_check — started
+2026-09-07 13:59:47,092 [INFO] Step 2 [done]: data_check — MNE data path: None
+Loaded 3 imagery files for subject 1
+2026-09-07 14:02:06,738 [INFO] Step 3 [running]: extract_notebook_code — started
+2026-09-07 14:02:07,716 [INFO] Step 3 [done]: extract_notebook_code — Extracted 31 code cells to extracted_notebook.py
+2026-09-07 14:17:36,396 [INFO] Step 4 [running]: load_and_filter — started
+2026-09-07 14:17:39,746 [INFO] Step 4 [failed]: load_and_filter — Traceback (most recent call last):
+  File "<string>", line 33, in <module>
+    raw_imagery.filter(1., 100., fir_design="firwin", verbose=False)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/box/case-studies/venv/lib/python3.13/site-packages/mne/io/base.py", line 1173, in filter
+    return super().filter(
+           ~~~~~~~~~~~~~~^
+        l_freq,
+        ^^^^^^^
+    ...<13 lines>...
+        verbose=verbose,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "<decorator-gen-90>", line 10, in filter
+  File "/home/box/case-studies/venv/lib/python3.13/site-packages/mne/filter.py", line 2558, in filter
+    filter_data(
+    ~~~~~~~~~~~^
+        self._data[:, start:stop],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+        verbose=use_verbose,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "<decorator-gen-85>", line 10, in filter_data
+  File "/home/box/case-studies/venv/lib/python3.13/site-packages/mne/filter.py", line 1016, in filter_data
+    filt = create_filter(
+        data,
+    ...<10 lines>...
+        fir_design,
+    )
+  File "<decorator-gen-86>", line 12, in create_filter
+  File "/home/box/case-studies/venv/lib/python3.13/site-packages/mne/filter.py", line 1181, in create_filter
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: h_freq ([100.]) must be less than the Nyquist frequency 80.0
+
+2026-09-07 14:17:39,746 [ERROR] Step 4 failed
+Traceback (most recent call last):
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 73, in run_step
+    result = func()
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 185, in step_04_load_and_filter
+    raise RuntimeError(r.stderr)
+RuntimeError: Traceback (most recent call last):
+  File "<string>", line 33, in <module>
+    raw_imagery.filter(1., 100., fir_design="firwin", verbose=False)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/box/case-studies/venv/lib/python3.13/site-packages/mne/io/base.py", line 1173, in filter
+    return super().filter(
+           ~~~~~~~~~~~~~~^
+        l_freq,
+        ^^^^^^^
+    ...<13 lines>...
+        verbose=verbose,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "<decorator-gen-90>", line 10, in filter
+  File "/home/box/case-studies/venv/lib/python3.13/site-packages/mne/filter.py", line 2558, in filter
+    filter_data(
+    ~~~~~~~~~~~^
+        self._data[:, start:stop],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+        verbose=use_verbose,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "<decorator-gen-85>", line 10, in filter_data
+  File "/home/box/case-studies/venv/lib/python3.13/site-packages/mne/filter.py", line 1016, in filter_data
+    filt = create_filter(
+        data,
+    ...<10 lines>...
+        fir_design,
+    )
+  File "<decorator-gen-86>", line 12, in create_filter
+  File "/home/box/case-studies/venv/lib/python3.13/site-packages/mne/filter.py", line 1181, in create_filter
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: h_freq ([100.]) must be less than the Nyquist frequency 80.0
+
+2026-09-07 14:17:52,228 [INFO] Step 4 [running]: load_and_filter — started
+2026-09-07 14:17:55,839 [INFO] Step 4 [done]: load_and_filter — NOTE: pick_types() is a legacy function. New code should use inst.pick(...).
+NOTE: pick_types() is a legacy function. New code should use inst.pick(...).
+Imagery: 60000 samples, 64 chs
+Movement: 60000 samples, 64 chs
+Writing /home/box/case-studies/_nospace/cs002_work/data/processed/raw_imagery_filt.fif
+Closing /home/box/case-studies/_nospace/cs002_work/data/processed/raw_imagery_filt.fif
+[done]
+Writing /home/box/case-studies/_nospace/cs002_work/data/processed/raw_movement_filt.fif
+Closing /home/box/case-studies/_nospace/cs002_work/data/processed/raw_movement_filt.fif
+[done]
+2026-09-07 14:20:56,703 [INFO] Step 5 [running]: epoching — started
+2026-09-07 14:20:59,055 [INFO] Step 5 [done]: epoching — Imagery epochs: 45
+Movement epochs: 45
+2026-09-07 17:25:26,054 [INFO] Step 6 [running]: feature_extraction — started
+2026-09-07 17:25:30,979 [INFO] Step 6 [failed]: feature_extraction — Traceback (most recent call last):
+  File "<string>", line 30, in <module>
+    json.dump(feature_names, f)
+    ^^^^
+NameError: name 'json' is not defined. Did you forget to import 'json'?
+
+2026-09-07 17:25:30,979 [ERROR] Step 6 failed
+Traceback (most recent call last):
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 73, in run_step
+    result = func()
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 266, in step_06_feature_extraction
+    raise RuntimeError(r.stderr)
+RuntimeError: Traceback (most recent call last):
+  File "<string>", line 30, in <module>
+    json.dump(feature_names, f)
+    ^^^^
+NameError: name 'json' is not defined. Did you forget to import 'json'?
+
+2026-09-07 17:25:39,949 [INFO] Step 6 [running]: feature_extraction — started
+2026-09-07 17:25:42,220 [INFO] Step 6 [failed]: feature_extraction — Traceback (most recent call last):
+  File "<string>", line 31, in <module>
+    json.dump(feature_names, f)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/__init__.py", line 180, in dump
+    fp.write(chunk)
+    ~~~~~~~~^^^^^^^
+ValueError: I/O operation on closed file.
+
+2026-09-07 17:25:42,220 [ERROR] Step 6 failed
+Traceback (most recent call last):
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 73, in run_step
+    result = func()
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 267, in step_06_feature_extraction
+    raise RuntimeError(r.stderr)
+RuntimeError: Traceback (most recent call last):
+  File "<string>", line 31, in <module>
+    json.dump(feature_names, f)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/__init__.py", line 180, in dump
+    fp.write(chunk)
+    ~~~~~~~~^^^^^^^
+ValueError: I/O operation on closed file.
+
+2026-09-07 17:25:54,961 [INFO] Step 6 [running]: feature_extraction — started
+2026-09-07 17:25:57,410 [INFO] Step 6 [done]: feature_extraction — Features: (45, 320), Labels: (45,), Classes: [23 22]
+2026-09-08 04:25:12,859 [INFO] Step 7 [running]: human_features — started
+2026-09-08 04:25:13,051 [INFO] Step 7 [done]: human_features — Human features: (45, 5), names: ['alpha_asym', 'beta_asym', 'alpha_total', 'beta_total', 'broadband_var']
+2026-09-08 04:25:31,487 [INFO] Step 8 [running]: train_rf — started
+2026-09-08 04:25:37,277 [INFO] Step 8 [done]: train_rf — RF CV accuracy: 0.511 ± 0.054
+Saved RF model
+2026-09-08 04:26:35,989 [INFO] Step 9 [running]: train_xgb — started
+2026-09-08 04:26:39,609 [INFO] Step 9 [done]: train_xgb — XGB CV accuracy: 0.644 ± 0.227
+Saved XGB model
+2026-09-08 04:26:55,187 [INFO] Step 10 [running]: shap_analysis — started
+2026-09-08 04:26:58,039 [INFO] Step 10 [failed]: shap_analysis — Traceback (most recent call last):
+  File "<string>", line 19, in <module>
+    shap.summary_plot(shap_values[1], X, feature_names=feature_names, max_display=30, show=False)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/box/case-studies/venv/lib/python3.13/site-packages/shap/plots/_beeswarm.py", line 664, in summary_legacy
+    assert num_features == features.shape[1], shape_msg
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: The shape of the shap_values matrix does not match the shape of the provided data matrix.
+
+2026-09-08 04:26:58,039 [ERROR] Step 10 failed
+Traceback (most recent call last):
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 73, in run_step
+    result = func()
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 430, in step_10_shap_analysis
+    raise RuntimeError(r.stderr)
+RuntimeError: Traceback (most recent call last):
+  File "<string>", line 19, in <module>
+    shap.summary_plot(shap_values[1], X, feature_names=feature_names, max_display=30, show=False)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/box/case-studies/venv/lib/python3.13/site-packages/shap/plots/_beeswarm.py", line 664, in summary_legacy
+    assert num_features == features.shape[1], shape_msg
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: The shape of the shap_values matrix does not match the shape of the provided data matrix.
+
+2026-09-08 04:27:17,292 [INFO] Step 10 [running]: shap_analysis — started
+2026-09-08 04:27:20,340 [INFO] Step 10 [done]: shap_analysis — Band importance: {'delta': 0.0, 'theta': 0.0, 'alpha': 0.0, 'beta': 0.0, 'gamma': 0.0}
+Saved SHAP plots
+2026-09-08 14:00:30,277 [INFO] Step 11 [running]: topomaps — started
+2026-09-08 14:00:33,733 [INFO] Step 11 [failed]: topomaps — Traceback (most recent call last):
+  File "<string>", line 18, in <module>
+    info.set_montage("standard_1020", verbose=False)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<decorator-gen-22>", line 10, in set_montage
+  File "/home/box/case-studies/venv/lib/python3.13/site-packages/mne/_fiff/meas_info.py", line 429, in set_montage
+    _set_montage(info, montage, match_case, match_alias, on_missing)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/box/case-studies/venv/lib/python3.13/site-packages/mne/channels/montage.py", line 1344, in _set_montage
+    _on_missing(on_missing, missing_coord_msg)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/box/case-studies/venv/lib/python3.13/site-packages/mne/utils/check.py", line 1222, in _on_missing
+    raise error_klass(msg)
+ValueError: DigMontage is only a subset of info. There are 28 channel positions not present in the DigMontage. The channels missing from the montage are:
+
+['Fc5', 'Fc3', 'Fc1', 'Fcz', 'Fc2', 'Fc4', 'Fc6', 'Cp5', 'Cp3', 'Cp1', 'Cpz', 'Cp2', 'Cp4', 'Cp6', 'Af7', 'Af3', 'Afz', 'Af4', 'Af8', 'Ft7', 'Ft8', 'Tp7', 'Tp8', 'Po7', 'Po3', 'Poz', 'Po4', 'Po8'].
+
+Consider using inst.rename_channels to match the montage nomenclature, or inst.set_channel_types if these are not EEG channels, or use the on_missing parameter if the channel positions are allowed to be unknown in your analyses.
+
+2026-09-08 14:00:33,733 [ERROR] Step 11 failed
+Traceback (most recent call last):
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 73, in run_step
+    result = func()
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 507, in step_11_topomaps
+    raise RuntimeError(r.stderr)
+RuntimeError: Traceback (most recent call last):
+  File "<string>", line 18, in <module>
+    info.set_montage("standard_1020", verbose=False)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<decorator-gen-22>", line 10, in set_montage
+  File "/home/box/case-studies/venv/lib/python3.13/site-packages/mne/_fiff/meas_info.py", line 429, in set_montage
+    _set_montage(info, montage, match_case, match_alias, on_missing)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/box/case-studies/venv/lib/python3.13/site-packages/mne/channels/montage.py", line 1344, in _set_montage
+    _on_missing(on_missing, missing_coord_msg)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/box/case-studies/venv/lib/python3.13/site-packages/mne/utils/check.py", line 1222, in _on_missing
+    raise error_klass(msg)
+ValueError: DigMontage is only a subset of info. There are 28 channel positions not present in the DigMontage. The channels missing from the montage are:
+
+['Fc5', 'Fc3', 'Fc1', 'Fcz', 'Fc2', 'Fc4', 'Fc6', 'Cp5', 'Cp3', 'Cp1', 'Cpz', 'Cp2', 'Cp4', 'Cp6', 'Af7', 'Af3', 'Afz', 'Af4', 'Af8', 'Ft7', 'Ft8', 'Tp7', 'Tp8', 'Po7', 'Po3', 'Poz', 'Po4', 'Po8'].
+
+Consider using inst.rename_channels to match the montage nomenclature, or inst.set_channel_types if these are not EEG channels, or use the on_missing parameter if the channel positions are allowed to be unknown in your analyses.
+
+2026-09-08 14:01:20,004 [INFO] Step 11 [running]: topomaps — started
+2026-09-08 14:01:25,349 [INFO] Step 11 [done]: topomaps — Saved topomaps and alpha C3/C4 arrays + comparison plot
+2026-09-08 17:04:13,114 [INFO] Step 12 [running]: dl_light — started
+2026-09-08 17:04:25,704 [INFO] Step 12 [done]: dl_light — EEGNetLite test accuracy: 0.778
+Saved EEGNetLite model
+2026-09-10 06:21:11,309 [INFO] Step 13 [running]: tabpfn — started
+2026-09-10 06:21:15,129 [INFO] Step 13 [done]: tabpfn — TabPFN unavailable or failed: TabPFN requires a one-time license acceptance to download
+model weights for local inference, but no interactive terminal
+is available.
+
+To authenticate in a non-interactive environment:
+  1. Open https://ux.priorlabs.ai in a browser and log in (or register)
+  2. Accept the license on the Licenses tab
+  3. Copy your API Key from https://ux.priorlabs.ai/account
+  4. Set the environment variable: export TABPFN_TOKEN="<your-api-key>"
+     or in Python (before calling .fit()): import os; os.environ["TABPFN_TOKEN"] = "<your-api-key>"
+Saved TabPFN result
+2026-09-10 14:35:44,145 [INFO] Step 14 [running]: stage_a — started
+2026-09-10 14:35:44,260 [INFO] Step 14 [done]: stage_a — Broadband var threshold (90th %ile): 0.0000
+Trials flagged for review: 5 / 45
+Flagged class distribution: [3 2]
+2026-09-10 14:57:55,092 [INFO] Step 15 [running]: stage_b — started
+2026-09-10 14:57:57,111 [INFO] Step 15 [done]: stage_b — Stage B (enriched) test accuracy: 0.556
+2026-09-10 16:23:41,594 [INFO] Step 16 [running]: config_scores — started
+2026-09-10 16:23:46,635 [INFO] Step 16 [done]: config_scores — Subject-specific C3/C4 sensorimotor mu-beta: 0.489 ± 0.054 (4 feats)
+Central 3×3 Laplacian (C1,C2,C3,C4,Cz,CP1,CP2,CP3,CP4): 0.489 ± 0.054 (10 feats)
+Full 64-channel sensorimotor: 0.489 ± 0.054 (128 feats)
+Occipital alpha only (control): 0.489 ± 0.054 (3 feats)
+Saved config scores
+2026-09-10 16:24:26,865 [INFO] Step 16 [running]: config_scores — started
+2026-09-10 16:24:32,115 [INFO] Step 16 [done]: config_scores — Subject-specific C3/C4 sensorimotor mu-beta: 0.578 ± 0.130 (4 feats)
+Central 3×3 Laplacian (C1,C2,C3,C4,Cz,CP1,CP2,CP3,CP4): 0.644 ± 0.178 (10 feats)
+Full 64-channel sensorimotor: 0.556 ± 0.141 (128 feats)
+Occipital alpha only (control): 0.489 ± 0.113 (3 feats)
+Saved config scores
+2026-09-10 16:25:30,490 [INFO] Step 17 [running]: agentic_stub — started
+2026-09-10 16:25:30,512 [INFO] Step 17 [done]: agentic_stub — Created agentic stub: memory + schema
+2026-09-10 16:27:29,031 [INFO] Step 18 [running]: executed_notebook — started
+2026-09-10 16:27:36,290 [INFO] Step 18 [failed]: executed_notebook — nbconvert failed: usage: __main__.py [-h] [--debug] [--show-config] [--show-config-json]
+                   [--generate-config] [-y] [--execute] [--allow-errors]
+                   [--stdin] [--stdout] [--inplace] [--clear-output]
+                   [--coalesce-streams] [--no-prompt] [--no-input]
+                   [--allow-chromium-download] [--disable-chromium-sandbox]
+                   [--show-input] [--embed-images] [--sanitize-html]
+                   [--log-level NbConvertApp.log_level]
+                   [--config NbConvertApp.config_file]
+                   [--to NbConvertApp.export_format]
+                   [--template TemplateExporter.template_name]
+                   [--template-file TemplateExporter.template_file]
+                   [--theme HTMLExporter.theme]
+                   [--sanitize_html HTMLExporter.sanitize_html]
+                   [--writer NbConvertApp.writer_class]
+                   [--post NbConvertApp.postprocessor_class]
+                   [--output NbConvertApp.output_base]
+                   [--output-dir FilesWriter.build_directory]
+                   [--reveal-prefix SlidesExporter.reveal_url_prefix]
+                   [--nbformat NotebookExporter.nbformat_version]
+                   [extra_args ...]
+__main__.py: error: argument --NbConvertApp.output_base: expected one argument
+
+2026-09-10 16:27:36,290 [ERROR] Step 18 failed
+Traceback (most recent call last):
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 73, in run_step
+    result = func()
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 797, in step_18_executed_notebook
+    raise RuntimeError(f"nbconvert failed: {r.stderr}")
+RuntimeError: nbconvert failed: usage: __main__.py [-h] [--debug] [--show-config] [--show-config-json]
+                   [--generate-config] [-y] [--execute] [--allow-errors]
+                   [--stdin] [--stdout] [--inplace] [--clear-output]
+                   [--coalesce-streams] [--no-prompt] [--no-input]
+                   [--allow-chromium-download] [--disable-chromium-sandbox]
+                   [--show-input] [--embed-images] [--sanitize-html]
+                   [--log-level NbConvertApp.log_level]
+                   [--config NbConvertApp.config_file]
+                   [--to NbConvertApp.export_format]
+                   [--template TemplateExporter.template_name]
+                   [--template-file TemplateExporter.template_file]
+                   [--theme HTMLExporter.theme]
+                   [--sanitize_html HTMLExporter.sanitize_html]
+                   [--writer NbConvertApp.writer_class]
+                   [--post NbConvertApp.postprocessor_class]
+                   [--output NbConvertApp.output_base]
+                   [--output-dir FilesWriter.build_directory]
+                   [--reveal-prefix SlidesExporter.reveal_url_prefix]
+                   [--nbformat NotebookExporter.nbformat_version]
+                   [extra_args ...]
+__main__.py: error: argument --NbConvertApp.output_base: expected one argument
+
+2026-09-10 16:40:30,919 [INFO] Step 18 [running]: executed_notebook — started
+2026-09-10 16:40:38,597 [INFO] Step 18 [failed]: executed_notebook — nbconvert failed: usage: __main__.py [-h] [--debug] [--show-config] [--show-config-json]
+                   [--generate-config] [-y] [--execute] [--allow-errors]
+                   [--stdin] [--stdout] [--inplace] [--clear-output]
+                   [--coalesce-streams] [--no-prompt] [--no-input]
+                   [--allow-chromium-download] [--disable-chromium-sandbox]
+                   [--show-input] [--embed-images] [--sanitize-html]
+                   [--log-level NbConvertApp.log_level]
+                   [--config NbConvertApp.config_file]
+                   [--to NbConvertApp.export_format]
+                   [--template TemplateExporter.template_name]
+                   [--template-file TemplateExporter.template_file]
+                   [--theme HTMLExporter.theme]
+                   [--sanitize_html HTMLExporter.sanitize_html]
+                   [--writer NbConvertApp.writer_class]
+                   [--post NbConvertApp.postprocessor_class]
+                   [--output NbConvertApp.output_base]
+                   [--output-dir FilesWriter.build_directory]
+                   [--reveal-prefix SlidesExporter.reveal_url_prefix]
+                   [--nbformat NotebookExporter.nbformat_version]
+                   [extra_args ...]
+__main__.py: error: argument --NbConvertApp.output_base: expected one argument
+
+2026-09-10 16:40:38,597 [ERROR] Step 18 failed
+Traceback (most recent call last):
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 73, in run_step
+    result = func()
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 797, in step_18_executed_notebook
+    raise RuntimeError(f"nbconvert failed: {r.stderr}")
+RuntimeError: nbconvert failed: usage: __main__.py [-h] [--debug] [--show-config] [--show-config-json]
+                   [--generate-config] [-y] [--execute] [--allow-errors]
+                   [--stdin] [--stdout] [--inplace] [--clear-output]
+                   [--coalesce-streams] [--no-prompt] [--no-input]
+                   [--allow-chromium-download] [--disable-chromium-sandbox]
+                   [--show-input] [--embed-images] [--sanitize-html]
+                   [--log-level NbConvertApp.log_level]
+                   [--config NbConvertApp.config_file]
+                   [--to NbConvertApp.export_format]
+                   [--template TemplateExporter.template_name]
+                   [--template-file TemplateExporter.template_file]
+                   [--theme HTMLExporter.theme]
+                   [--sanitize_html HTMLExporter.sanitize_html]
+                   [--writer NbConvertApp.writer_class]
+                   [--post NbConvertApp.postprocessor_class]
+                   [--output NbConvertApp.output_base]
+                   [--output-dir FilesWriter.build_directory]
+                   [--reveal-prefix SlidesExporter.reveal_url_prefix]
+                   [--nbformat NotebookExporter.nbformat_version]
+                   [extra_args ...]
+__main__.py: error: argument --NbConvertApp.output_base: expected one argument
+
+2026-09-10 16:40:55,122 [INFO] Step 18 [running]: executed_notebook — started
+2026-09-10 16:41:05,849 [INFO] Step 18 [done]: executed_notebook — Executed notebook saved to eeg_motor_imagery_executed.ipynb
+2026-09-11 05:05:58,266 [INFO] Step 19 [running]: fill_conclusion — started
+2026-09-11 05:05:59,233 [INFO] Step 19 [done]: fill_conclusion — Updated notebook with results summary
+2026-09-11 05:06:54,723 [INFO] Step 20 [running]: sync_to_real — started
+2026-09-11 05:06:54,763 [INFO] Step 20 [failed]: sync_to_real — Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    shutil.copy2(os.path.join(data_work, f), os.path.join(data_real, f))
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/shutil.py", line 468, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/shutil.py", line 240, in copyfile
+    raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+shutil.SameFileError: '/home/box/case-studies/_nospace/cs002_work/data/processed/config_scores.json' and '/home/box/case-studies/002 - EEG Motor Imagery/data/processed/config_scores.json' are the same file
+
+2026-09-11 05:06:54,763 [ERROR] Step 20 failed
+Traceback (most recent call last):
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 73, in run_step
+    result = func()
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 896, in step_20_sync_to_real
+    raise RuntimeError(r.stderr)
+RuntimeError: Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    shutil.copy2(os.path.join(data_work, f), os.path.join(data_real, f))
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/shutil.py", line 468, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/shutil.py", line 240, in copyfile
+    raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+shutil.SameFileError: '/home/box/case-studies/_nospace/cs002_work/data/processed/config_scores.json' and '/home/box/case-studies/002 - EEG Motor Imagery/data/processed/config_scores.json' are the same file
+
+2026-09-11 05:07:14,476 [INFO] Step 20 [running]: sync_to_real — started
+2026-09-11 05:07:14,504 [INFO] Step 20 [done]: sync_to_real — Synced to real 002 directory: nb=copied; plots copied=4 same=0; data copied=0 same=25
+2026-09-11 05:09:22,153 [INFO] Step 21 [running]: readme_update — started
+2026-09-11 05:09:22,182 [INFO] Step 21 [failed]: readme_update — Traceback (most recent call last):
+  File "<string>", line 57, in <module>
+    | Random Forest (C3/C4 alpha/beta) | {configs.get("Subject-specific C3/C4 sensorimotor mu-beta", {{"mean": 0}})["mean"]:.3f} |
+                                                                                                     ^^^^^^^^^^^^^
+TypeError: unhashable type: 'dict'
+
+2026-09-11 05:09:22,182 [ERROR] Step 21 failed
+Traceback (most recent call last):
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 73, in run_step
+    result = func()
+  File "/home/box/case-studies/_nospace/cs002_work/cs002_pipeline.py", line 1015, in step_21_readme_update
+    raise RuntimeError(r.stderr)
+RuntimeError: Traceback (most recent call last):
+  File "<string>", line 57, in <module>
+    | Random Forest (C3/C4 alpha/beta) | {configs.get("Subject-specific C3/C4 sensorimotor mu-beta", {{"mean": 0}})["mean"]:.3f} |
+                                                                                                     ^^^^^^^^^^^^^
+TypeError: unhashable type: 'dict'
+
+2026-09-11 05:10:19,949 [INFO] Step 21 [running]: readme_update — started
+2026-09-11 05:10:19,978 [INFO] Step 21 [done]: readme_update — Wrote /home/box/case-studies/002 - EEG Motor Imagery/README.md
+2026-09-11 06:13:22,217 [INFO] Step 22 [running]: git_commit — started
