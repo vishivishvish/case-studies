@@ -1,0 +1,156 @@
+[
+  {
+    "step": 1,
+    "name": "env_check",
+    "state": "done",
+    "detail": "Python: Python 3.13.5. Missing: none",
+    "updated_at_ist": "2026-09-07T13:58:29.766187+00:00"
+  },
+  {
+    "step": 2,
+    "name": "data_check",
+    "state": "done",
+    "detail": "MNE data path: None\nLoaded 3 imagery files for subject 1",
+    "updated_at_ist": "2026-09-07T13:59:47.091927+00:00"
+  },
+  {
+    "step": 3,
+    "name": "extract_notebook_code",
+    "state": "done",
+    "detail": "Extracted 31 code cells to extracted_notebook.py",
+    "updated_at_ist": "2026-09-07T14:02:07.716442+00:00"
+  },
+  {
+    "step": 4,
+    "name": "load_and_filter",
+    "state": "done",
+    "detail": "NOTE: pick_types() is a legacy function. New code should use inst.pick(...).\nNOTE: pick_types() is a legacy function. New code should use inst.pick(...).\nImagery: 60000 samples, 64 chs\nMovement: 60000 samples, 64 chs\nWriting /home/box/case-studies/_nospace/cs002_work/data/processed/raw_imagery_filt.fif\nClosing /home/box/case-studies/_nospace/cs002_work/data/processed/raw_imagery_filt.fif\n[done]\nWriting /home/box/case-studies/_nospace/cs002_work/data/processed/raw_movement_filt.fif\nClosing /home/box/case-studies/_nospace/cs002_work/data/processed/raw_movement_filt.fif\n[done]",
+    "updated_at_ist": "2026-09-07T14:17:55.839005+00:00"
+  },
+  {
+    "step": 5,
+    "name": "epoching",
+    "state": "done",
+    "detail": "Imagery epochs: 45\nMovement epochs: 45",
+    "updated_at_ist": "2026-09-07T14:20:59.055477+00:00"
+  },
+  {
+    "step": 6,
+    "name": "feature_extraction",
+    "state": "done",
+    "detail": "Features: (45, 320), Labels: (45,), Classes: [23 22]",
+    "updated_at_ist": "2026-09-07T17:25:57.410460+00:00"
+  },
+  {
+    "step": 7,
+    "name": "human_features",
+    "state": "done",
+    "detail": "Human features: (45, 5), names: ['alpha_asym', 'beta_asym', 'alpha_total', 'beta_total', 'broadband_var']",
+    "updated_at_ist": "2026-09-08T04:25:13.051221+00:00"
+  },
+  {
+    "step": 8,
+    "name": "train_rf",
+    "state": "done",
+    "detail": "RF CV accuracy: 0.689 \u00b1 0.293 (on log10+scaled X)\nSaved RF model",
+    "updated_at_ist": "2026-09-08T04:28:31.388412+00:00"
+  },
+  {
+    "step": 9,
+    "name": "train_xgb",
+    "state": "done",
+    "detail": "XGB CV accuracy: 0.556 \u00b1 0.211 (on log10+scaled X)\nSaved XGB model",
+    "updated_at_ist": "2026-09-08T04:28:31.388448+00:00"
+  },
+  {
+    "step": 10,
+    "name": "shap_analysis",
+    "state": "done",
+    "detail": "Band importance: {'delta': 0.0014797770402678449, 'theta': 0.0012996039900301675, 'alpha': 0.0020884279353168794, 'beta': 0.0011107209437236846, 'gamma': 0.0018284545888662955}\nSaved SHAP plots (log10+scaled X)",
+    "updated_at_ist": "2026-09-08T04:28:31.388458+00:00"
+  },
+  {
+    "step": 11,
+    "name": "topomaps",
+    "state": "done",
+    "detail": "Saved topomaps and alpha C3/C4 arrays + comparison plot",
+    "updated_at_ist": "2026-09-08T14:01:25.349079+00:00"
+  },
+  {
+    "step": 12,
+    "name": "dl_light",
+    "state": "done",
+    "detail": "EEGNetLite test accuracy: 0.778\nSaved EEGNetLite model",
+    "updated_at_ist": "2026-09-08T17:04:25.703543+00:00"
+  },
+  {
+    "step": 13,
+    "name": "tabpfn",
+    "state": "done",
+    "detail": "TabPFN unavailable or failed: TabPFN requires a one-time license acceptance to download\nmodel weights for local inference, but no interactive terminal\nis available.\n\nTo authenticate in a non-interactive environment:\n  1. Open https://ux.priorlabs.ai in a browser and log in (or register)\n  2. Accept the license on the Licenses tab\n  3. Copy your API Key from https://ux.priorlabs.ai/account\n  4. Set the environment variable: export TABPFN_TOKEN=\"<your-api-key>\"\n     or in Python (before calling .fit()): import os; os.environ[\"TABPFN_TOKEN\"] = \"<your-api-key>\"\nSaved TabPFN result",
+    "updated_at_ist": "2026-09-10T06:21:15.129684+00:00"
+  },
+  {
+    "step": 14,
+    "name": "stage_a",
+    "state": "done",
+    "detail": "Broadband var threshold (90th %ile): 0.0000\nTrials flagged for review: 5 / 45\nFlagged class distribution: [3 2]",
+    "updated_at_ist": "2026-09-10T14:35:44.260643+00:00"
+  },
+  {
+    "step": 15,
+    "name": "stage_b",
+    "state": "done",
+    "detail": "Stage B (enriched) test accuracy: 0.556",
+    "updated_at_ist": "2026-09-10T14:57:57.110768+00:00"
+  },
+  {
+    "step": 16,
+    "name": "config_scores",
+    "state": "done",
+    "detail": "Subject-specific C3/C4 sensorimotor mu-beta: 0.578 \u00b1 0.130 (4 feats)\nCentral 3\u00d73 Laplacian (C1,C2,C3,C4,Cz,CP1,CP2,CP3,CP4): 0.644 \u00b1 0.178 (10 feats)\nFull 64-channel sensorimotor: 0.556 \u00b1 0.141 (128 feats)\nOccipital alpha only (control): 0.489 \u00b1 0.113 (3 feats)\nSaved config scores",
+    "updated_at_ist": "2026-09-10T16:24:32.115586+00:00"
+  },
+  {
+    "step": 17,
+    "name": "agentic_stub",
+    "state": "done",
+    "detail": "Created agentic stub: memory + schema",
+    "updated_at_ist": "2026-09-10T16:25:30.512479+00:00"
+  },
+  {
+    "step": 18,
+    "name": "executed_notebook",
+    "state": "done",
+    "detail": "Executed notebook saved to eeg_motor_imagery_executed.ipynb",
+    "updated_at_ist": "2026-09-10T16:41:05.848898+00:00"
+  },
+  {
+    "step": 19,
+    "name": "fill_conclusion",
+    "state": "done",
+    "detail": "Updated notebook with results summary",
+    "updated_at_ist": "2026-09-11T05:05:59.233167+00:00"
+  },
+  {
+    "step": 20,
+    "name": "sync_to_real",
+    "state": "done",
+    "detail": "Synced to real 002 directory: nb=copied; plots copied=4 same=0; data copied=0 same=25",
+    "updated_at_ist": "2026-09-11T05:07:14.504017+00:00"
+  },
+  {
+    "step": 21,
+    "name": "readme_update",
+    "state": "done",
+    "detail": "Wrote /home/box/case-studies/002 - EEG Motor Imagery/README.md",
+    "updated_at_ist": "2026-09-11T05:10:19.978783+00:00"
+  },
+  {
+    "step": 22,
+    "name": "git_commit",
+    "state": "running",
+    "detail": "started",
+    "updated_at_ist": "2026-09-11T06:13:22.217135+00:00"
+  }
+]
