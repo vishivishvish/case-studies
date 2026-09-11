@@ -1,3 +1,13 @@
 2026-09-11 15:02:32,210 [INFO] Step 1 [running]: env_check — started
 2026-09-11 15:02:32,244 [INFO] Installing gymnasium[box2d] into case-studies venv…
 2026-09-11 15:02:51,093 [INFO] Step 1 [done]: env_check — {"python": "Python 3.13.5", "venv_python": "/home/box/case-studies/venv/bin/python", "packages": {"gymnasium": "1.3.0", "numpy": "2.5.2", "torch": "2.14.0+cu130", "sklearn": "1.9.0", "PIL": "12.3.0", 
+2026-09-11 18:35:12,784 [INFO] Step 2 [running]: sim_smoke — started
+2026-09-11 18:35:12,784 [ERROR] Step 2 failed
+Traceback (most recent call last):
+  File "/home/box/case-studies/_nospace/cs013_work/cs013_pipeline.py", line 182, in run_step
+    result = meta["fn"]()
+  File "/home/box/case-studies/_nospace/cs013_work/cs013_pipeline.py", line 145, in _f
+    raise RuntimeError(f"Step {n} ({name}) not implemented yet — scaffold only")
+RuntimeError: Step 2 (sim_smoke) not implemented yet — scaffold only
+2026-09-11 18:35:23,272 [INFO] Step 2 [running]: sim_smoke — started
+2026-09-11 18:35:24,064 [INFO] Step 2 [done]: sim_smoke — steps=60 reward=25.35 frames=4

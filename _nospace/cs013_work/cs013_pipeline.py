@@ -140,6 +140,27 @@ sys.exit(0 if out.get("ok") else 2)
     return {"detail": json.dumps(detail)[:500]}
 
 
+
+def step_02_sim_smoke() -> Dict[str, Any]:
+    """Run a short CarRacing episode headless; save sample frames."""
+    script = WORK_DIR / "step02_sim_smoke.py"
+    r = subprocess.run(
+        [VENV_PYTHON, str(script)],
+        capture_output=True,
+        text=True,
+        timeout=180,
+        cwd=str(WORK_DIR),
+        env={**__import__("os").environ, "SDL_VIDEODRIVER": "dummy", "PYGLET_HEADLESS": "1"},
+    )
+    if r.returncode != 0:
+        raise RuntimeError((r.stderr or r.stdout or "sim_smoke failed")[-1200:])
+    line = (r.stdout or "").strip().splitlines()[-1]
+    summary = json.loads(line)
+    return {
+        "detail": f"steps={summary.get('steps')} reward={float(summary.get('total_reward', 0)):.2f} frames={len(summary.get('frames', []))}"
+    }
+
+
 def _stub(n: int, name: str) -> Callable[[], Dict[str, Any]]:
     def _f() -> Dict[str, Any]:
         raise RuntimeError(f"Step {n} ({name}) not implemented yet — scaffold only")
@@ -149,7 +170,7 @@ def _stub(n: int, name: str) -> Callable[[], Dict[str, Any]]:
 
 STEPS: List[Dict[str, Any]] = [
     {"num": 1, "name": "env_check", "fn": step_01_env_check, "desc": "Verify Python, venv, gymnasium, CarRacing-v3", "deps": []},
-    {"num": 2, "name": "sim_smoke", "fn": _stub(2, "sim_smoke"), "desc": "Smoke episode + frames", "deps": [1]},
+    {"num": 2, "name": "sim_smoke", "fn": step_02_sim_smoke, "desc": "Smoke episode + frames", "deps": [1]},
     {"num": 3, "name": "extract_stub_notebook", "fn": _stub(3, "extract_stub_notebook"), "desc": "Notebook outline", "deps": []},
     {"num": 4, "name": "pid_baseline", "fn": _stub(4, "pid_baseline"), "desc": "PID baseline", "deps": [2]},
     {"num": 5, "name": "collect_expert", "fn": _stub(5, "collect_expert"), "desc": "Expert rollouts", "deps": [4]},
