@@ -12,5 +12,12 @@
     "state": "done",
     "detail": "steps=60 reward=25.35 frames=4",
     "updated_at_ist": "2026-09-12T00:05:24.064238+05:30"
+  },
+  {
+    "step": 3,
+    "name": "extract_stub_notebook",
+    "state": "done",
+    "detail": "cells=14 md=12 code=2",
+    "updated_at_ist": "2026-09-12T09:36:25.352281+05:30"
   }
 ]
