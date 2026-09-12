@@ -24,7 +24,7 @@
     "step": 4,
     "name": "pid_baseline",
     "state": "done",
-    "detail": "mean_reward=-55.03\u00b13.02 cte=0.03611324841727689 frames=5",
-    "updated_at_ist": "2026-09-12T09:42:43.202684+05:30"
+    "detail": "mean_reward=176.41\u00b133.97 cte=0.4240040688997037 frames=5",
+    "updated_at_ist": "2026-09-12T09:53:24.684638+05:30"
   }
 ]

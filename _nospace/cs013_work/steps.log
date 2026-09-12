@@ -15,3 +15,5 @@ RuntimeError: Step 2 (sim_smoke) not implemented yet — scaffold only
 2026-09-12 04:06:25,352 [INFO] Step 3 [done]: extract_stub_notebook — cells=14 md=12 code=2
 2026-09-12 04:12:29,443 [INFO] Step 4 [running]: pid_baseline — started
 2026-09-12 04:12:43,203 [INFO] Step 4 [done]: pid_baseline — mean_reward=-55.03±3.02 cte=0.03611324841727689 frames=5
+2026-09-12 04:23:06,334 [INFO] Step 4 [running]: pid_baseline — started
+2026-09-12 04:23:24,685 [INFO] Step 4 [done]: pid_baseline — mean_reward=176.41±33.97 cte=0.4240040688997037 frames=5
