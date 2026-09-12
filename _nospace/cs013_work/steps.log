@@ -11,3 +11,5 @@ Traceback (most recent call last):
 RuntimeError: Step 2 (sim_smoke) not implemented yet — scaffold only
 2026-09-11 18:35:23,272 [INFO] Step 2 [running]: sim_smoke — started
 2026-09-11 18:35:24,064 [INFO] Step 2 [done]: sim_smoke — steps=60 reward=25.35 frames=4
+2026-09-12 04:06:25,311 [INFO] Step 3 [running]: extract_stub_notebook — started
+2026-09-12 04:06:25,352 [INFO] Step 3 [done]: extract_stub_notebook — cells=14 md=12 code=2
