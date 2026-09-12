@@ -179,6 +179,30 @@ def step_03_extract_stub_notebook() -> Dict[str, Any]:
     return {"detail": f"cells={summary.get('n_cells')} md={summary.get('n_markdown')} code={summary.get('n_code')}"}
 
 
+
+def step_04_pid_baseline() -> Dict[str, Any]:
+    """Vision PID lane-centering baseline on CarRacing-v3."""
+    script = WORK_DIR / "step04_pid_baseline.py"
+    r = subprocess.run(
+        [VENV_PYTHON, str(script)],
+        capture_output=True,
+        text=True,
+        timeout=600,
+        cwd=str(WORK_DIR),
+        env={**__import__("os").environ, "SDL_VIDEODRIVER": "dummy", "PYGLET_HEADLESS": "1"},
+    )
+    if r.returncode != 0:
+        raise RuntimeError((r.stderr or r.stdout or "pid_baseline failed")[-1500:])
+    line = (r.stdout or "").strip().splitlines()[-1]
+    summary = json.loads(line)
+    return {
+        "detail": (
+            f"mean_reward={summary.get('mean_reward'):.2f}±{summary.get('std_reward'):.2f} "
+            f"cte={summary.get('mean_abs_cte')} frames={summary.get('frames')}"
+        )
+    }
+
+
 def _stub(n: int, name: str) -> Callable[[], Dict[str, Any]]:
     def _f() -> Dict[str, Any]:
         raise RuntimeError(f"Step {n} ({name}) not implemented yet — scaffold only")
@@ -190,7 +214,7 @@ STEPS: List[Dict[str, Any]] = [
     {"num": 1, "name": "env_check", "fn": step_01_env_check, "desc": "Verify Python, venv, gymnasium, CarRacing-v3", "deps": []},
     {"num": 2, "name": "sim_smoke", "fn": step_02_sim_smoke, "desc": "Smoke episode + frames", "deps": [1]},
     {"num": 3, "name": "extract_stub_notebook", "fn": step_03_extract_stub_notebook, "desc": "Notebook outline", "deps": []},
-    {"num": 4, "name": "pid_baseline", "fn": _stub(4, "pid_baseline"), "desc": "PID baseline", "deps": [2]},
+    {"num": 4, "name": "pid_baseline", "fn": step_04_pid_baseline, "desc": "PID baseline", "deps": [2]},
     {"num": 5, "name": "collect_expert", "fn": _stub(5, "collect_expert"), "desc": "Expert rollouts", "deps": [4]},
     {"num": 6, "name": "bc_train", "fn": _stub(6, "bc_train"), "desc": "Behavioral cloning", "deps": [5]},
     {"num": 7, "name": "bc_eval", "fn": _stub(7, "bc_eval"), "desc": "BC vs PID", "deps": [6]},
