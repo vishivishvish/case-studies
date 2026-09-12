@@ -1,0 +1,43 @@
+{
+  "controller": "vision_PID_lane_center",
+  "env": "CarRacing-v3",
+  "episodes": [
+    {
+      "seed": 0,
+      "steps": 800,
+      "total_reward": -58.05642633228893,
+      "mean_abs_cte": 0.029681651474805493,
+      "tile_visited_count": 0
+    },
+    {
+      "seed": 1,
+      "steps": 800,
+      "total_reward": -50.90909090909145,
+      "mean_abs_cte": 0.05163221639825237,
+      "tile_visited_count": 0
+    },
+    {
+      "seed": 2,
+      "steps": 800,
+      "total_reward": -56.119402985075155,
+      "mean_abs_cte": 0.02702587737877279,
+      "tile_visited_count": 0
+    }
+  ],
+  "mean_reward": -55.02830674215185,
+  "std_reward": 3.018163809494597,
+  "mean_abs_cte": 0.03611324841727689,
+  "frames": [
+    "/home/box/case-studies/_nospace/cs013_work/plots/pid_t000.png",
+    "/home/box/case-studies/_nospace/cs013_work/plots/pid_t100.png",
+    "/home/box/case-studies/_nospace/cs013_work/plots/pid_t250.png",
+    "/home/box/case-studies/_nospace/cs013_work/plots/pid_t500.png",
+    "/home/box/case-studies/_nospace/cs013_work/plots/pid_t799.png"
+  ],
+  "gains": {
+    "Kp": 0.85,
+    "Ki": 0.02,
+    "Kd": 0.25
+  },
+  "notes": "Heuristic gray-road mask + PD/PID on cross-track error; exploratory baseline, not SOTA."
+}
