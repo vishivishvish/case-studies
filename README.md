@@ -1,6 +1,6 @@
 # Case Studies
 
-AI/ML case studies for learning across domains by **law rediscovery**: an explainability method surfaces a scientific or engineering regularity the model was never told. CS001 (Targeted Alpha Therapy) is the depth bar — executed results, real rediscovery narrative, and a full technical stack — not a checklist of empty stage stubs.
+AI/ML case studies for interdisciplinary  learning across domains by **law rediscovery**: an explainability method surfaces a scientific or engineering regularity the model was never told. CS001 (Targeted Alpha Therapy) is the depth bar — executed results, real rediscovery narrative, and a full technical stack — not a checklist of empty stage stubs.
 
 ## Case studies
 
