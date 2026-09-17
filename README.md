@@ -20,7 +20,7 @@ AI/ML case studies for interdisciplinary learning across domains by **law redisc
 | 12 | [Spoken Word Recognition](012%20-%20Spoken%20Word%20Recognition/spoken_word_recognition.ipynb) | Speech / audio | Spoken command word from MFCCs | Formant transitions (Haskins) | Yes |
 | 13 | [Self-Driving Car Sim](013%20-%20Self-Driving%20Car%20Sim/self_driving_car_sim.ipynb) | Robotics / driving (sim) | Steer/gas/brake on CarRacing-v3 | Classical control / lookahead from pixels | No |
 
-**CS001-level** means the case matches CS001’s *depth*: executed end-to-end work, a real rediscovery claim backed by results, and a serious technical stack — not merely scaffolding stage headings. CS013 is gated in progress (PID expert demos collected; cloning and later House Stack steps still open).
+**CS001-level** means the case matches CS001’s *depth*: executed end-to-end work, a real rediscovery claim backed by results, and a serious technical stack — not merely scaffolding stage headings. CS013 is gated and in progress (PID expert demos collected; cloning and later House Stack steps still open).
 
 ## Authorship
 
