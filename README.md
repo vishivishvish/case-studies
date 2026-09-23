@@ -25,3 +25,5 @@ AI/ML case studies for interdisciplinary learning across domains by **law redisc
 ## Authorship
 
 Ideated by [vishivishvish](https://github.com/vishivishvish). Co-authors include Claude, Codex, Cursor, Gemini, Grok, Qwen, and other agents on research, narrative, implementation, and review. Every change still needs human approval before merge or publication.
+
+<!-- readme-grammar-pass: 2026-09-23 -->
