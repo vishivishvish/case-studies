@@ -26,4 +26,4 @@ AI/ML case studies that aim to cover interdisciplinary learning across domains t
 
 Ideated by [vishivishvish](https://github.com/vishivishvish). Co-authors include Claude, Codex, Cursor, Gemini, Grok, Qwen, and other agents on research, narrative, implementation, and review. Every change still needs human approval before merge or publication.
 
-<!-- readme-grammar-pass: 2026-10-01 -->
+<!-- readme-grammar-pass: 2026-10-11 -->
